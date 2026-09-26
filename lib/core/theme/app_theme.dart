@@ -35,7 +35,7 @@ class AppTheme {
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         iconTheme: IconThemeData(color: AppColors.lightTextPrimary),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.lightCard,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -107,7 +107,7 @@ class AppTheme {
         systemOverlayStyle: SystemUiOverlayStyle.light,
         iconTheme: IconThemeData(color: AppColors.darkTextPrimary),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.darkCard,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -179,7 +179,7 @@ class AppTheme {
         systemOverlayStyle: SystemUiOverlayStyle.light,
         iconTheme: IconThemeData(color: AppColors.amoledTextPrimary),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.amoledCard,
         elevation: 0,
         shape: RoundedRectangleBorder(

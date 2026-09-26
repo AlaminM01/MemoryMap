@@ -24,21 +24,20 @@ class ThemeState {
   }
 }
 
-class ThemeNotifier extends StateNotifier<ThemeState> {
-  final StorageService _storageService;
+class ThemeNotifier extends Notifier<ThemeState> {
+  late final StorageService _storageService;
 
-  ThemeNotifier([StorageService? storageService])
-      : _storageService = storageService ?? StorageService(),
-        super(const ThemeState()) {
-    _loadSettings();
-  }
-
-  void _loadSettings() {
+  @override
+  ThemeState build() {
+    _storageService = StorageService();
     final box = _storageService.settingsBox;
-    final modeIndex = box.get(AppConstants.themeModeKey, defaultValue: ThemeMode.system.index) as int;
+    final modeIndex = box.get(
+      AppConstants.themeModeKey,
+      defaultValue: ThemeMode.system.index,
+    ) as int;
     final isAmoled = box.get(AppConstants.isAmoledKey, defaultValue: false) as bool;
 
-    state = ThemeState(
+    return ThemeState(
       themeMode: ThemeMode.values[modeIndex],
       isAmoled: isAmoled,
     );
@@ -54,9 +53,9 @@ class ThemeNotifier extends StateNotifier<ThemeState> {
     await _storageService.settingsBox.put(AppConstants.isAmoledKey, value);
   }
 
-  ThemeData get activeDarkTheme => state.isAmoled ? AppTheme.amoledTheme : AppTheme.darkTheme;
+  ThemeData get activeDarkTheme =>
+      state.isAmoled ? AppTheme.amoledTheme : AppTheme.darkTheme;
 }
 
-final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeState>((ref) {
-  return ThemeNotifier();
-});
+final themeProvider =
+    NotifierProvider<ThemeNotifier, ThemeState>(ThemeNotifier.new);
