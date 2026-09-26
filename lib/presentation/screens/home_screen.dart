@@ -12,6 +12,8 @@ import '../../widgets/category_island_bar.dart';
 import '../../widgets/category_selector_sheet.dart';
 import '../../widgets/floating_dock.dart';
 import '../../widgets/note_island_card.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import '../../core/utils/page_transitions.dart';
 import 'note_editor_screen.dart';
 import 'search_screen.dart';
 import 'settings_sheet.dart';
@@ -21,27 +23,11 @@ class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   void _openNewNote(BuildContext context) {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 350),
-        pageBuilder: (_, __, ___) => const NoteEditorScreen(),
-        transitionsBuilder: (_, animation, __, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-      ),
-    );
+    Navigator.of(context).push(FadeThroughPageRoute(page: const NoteEditorScreen()));
   }
 
   void _openNote(BuildContext context, Note note) {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 350),
-        pageBuilder: (_, __, ___) => NoteEditorScreen(initialNote: note),
-        transitionsBuilder: (_, animation, __, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-      ),
-    );
+    Navigator.of(context).push(FadeThroughPageRoute(page: NoteEditorScreen(initialNote: note)));
   }
 
   void _openSearch(BuildContext context) {
@@ -446,7 +432,10 @@ class HomeScreen extends ConsumerWidget {
           return true;
         }
       },
-      child: child,
+      child: child
+          .animate()
+          .fadeIn(duration: const Duration(milliseconds: 280), curve: Curves.easeOut)
+          .slideY(begin: 0.04, end: 0, duration: const Duration(milliseconds: 280), curve: Curves.easeOutCubic),
     );
   }
 
