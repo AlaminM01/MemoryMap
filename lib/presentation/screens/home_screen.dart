@@ -90,8 +90,14 @@ class HomeScreen extends ConsumerWidget {
           : (isDark ? AppColors.darkBackground : AppColors.lightBackground),
       body: Stack(
         children: [
-          // Main Scrollable Area
-          CustomScrollView(
+          // Main Scrollable Area with Pull to Refresh
+          RefreshIndicator(
+            onRefresh: () async {
+              HapticFeedback.lightImpact();
+              await Future.delayed(const Duration(milliseconds: 300));
+              ref.invalidate(filteredNotesProvider);
+            },
+            child: CustomScrollView(
             slivers: [
               // Top Minimalist App Bar & Header
               SliverToBoxAdapter(
@@ -365,6 +371,7 @@ class HomeScreen extends ConsumerWidget {
               ),
             ],
           ),
+        ),
 
           // Floating Glass Dock anchored at bottom
           Positioned(
