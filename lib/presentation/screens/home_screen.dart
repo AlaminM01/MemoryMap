@@ -15,6 +15,7 @@ import '../../widgets/note_island_card.dart';
 import 'note_editor_screen.dart';
 import 'search_screen.dart';
 import 'settings_sheet.dart';
+import '../widgets/smart_organization_bar.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -296,6 +297,16 @@ class HomeScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
+                  ),
+                ),
+
+              // Smart Organization: Pinned Mind Bar (All section only)
+              if (filter.section == NoteSection.all &&
+                  filter.selectedCategoryId == null &&
+                  filter.searchQuery.isEmpty)
+                SliverToBoxAdapter(
+                  child: SmartOrganizationBar(
+                    onNoteTap: (note) => _openNote(context, note),
                   ),
                 ),
 
