@@ -51,6 +51,17 @@ class ThemeNotifier extends Notifier<ThemeState> {
   Future<void> toggleAmoled(bool value) async {
     state = state.copyWith(isAmoled: value);
     await _storageService.settingsBox.put(AppConstants.isAmoledKey, value);
+
+    if (value) {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.black,
+          statusBarColor: Colors.transparent,
+          systemNavigationBarIconBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.light,
+        ),
+      );
+    }
   }
 
   ThemeData get activeDarkTheme =>
