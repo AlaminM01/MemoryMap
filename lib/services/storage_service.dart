@@ -36,6 +36,13 @@ class StorageService {
     }
   }
 
+  Future<void> optimizeDatabase() async {
+    if (!_isInitialized) return;
+    await _notesBox.compact();
+    await _categoriesBox.compact();
+    await _tagsBox.compact();
+  }
+
   Future<void> clearAll() async {
     await _notesBox.clear();
     await _categoriesBox.clear();
