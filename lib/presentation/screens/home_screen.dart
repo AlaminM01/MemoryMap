@@ -312,12 +312,16 @@ class HomeScreen extends ConsumerWidget {
                     );
                   }
 
+                  final screenWidth = MediaQuery.of(context).size.width;
+                  final columns = screenWidth >= 960 ? 4 : (screenWidth >= 600 ? 3 : 2);
+                  final sidePadding = screenWidth > 960 ? 32.0 : 20.0;
+
                   if (isGridView) {
                     // Staggered Floating Island Grid
                     return SliverPadding(
-                      padding: const EdgeInsets.fromLTRB(20, 8, 20, 110),
+                      padding: EdgeInsets.fromLTRB(sidePadding, 8, sidePadding, 110),
                       sliver: SliverMasonryGrid.count(
-                        crossAxisCount: 2,
+                        crossAxisCount: columns,
                         mainAxisSpacing: 14,
                         crossAxisSpacing: 14,
                         itemBuilder: (context, index) {
@@ -337,8 +341,9 @@ class HomeScreen extends ConsumerWidget {
                     );
                   } else {
                     // Organic Floating Island List
+                    final maxContentWidth = screenWidth > 720 ? (screenWidth - 680) / 2 : sidePadding;
                     return SliverPadding(
-                      padding: const EdgeInsets.fromLTRB(20, 8, 20, 110),
+                      padding: EdgeInsets.fromLTRB(maxContentWidth, 8, maxContentWidth, 110),
                       sliver: SliverList(
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
